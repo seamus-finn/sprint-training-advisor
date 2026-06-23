@@ -872,22 +872,26 @@ if answer1 == "workout":
                     add_to_training_log(trainingdate, modifiedworkout)
 elif answer1 == "recovery":
     trainingdate, weeknumber, workoutlevel, daytype = get_training_day_info()
-    session = daytype + workoutlevel
-    if daytype == "accel":
-        plannedworkout = (accel_recovery[session])
 
-    elif daytype == "topspeed":
-        plannedworkout = (topspeed_recovery[session])
+    if workoutlevel == "rest" or daytype == "rest":
+        print("Rest day.")
+    else:
+        session = daytype + workoutlevel
+        if daytype == "accel":
+            plannedworkout = (accel_recovery[session])
 
-    elif daytype == "tempoMF":
-        plannedworkout = (tempoMF_recovery[session])
+        elif daytype == "topspeed":
+            plannedworkout = (topspeed_recovery[session])
 
-    elif daytype == "tempoW":
-        plannedworkout = (tempoW_recovery[session])
+        elif daytype == "tempoMF":
+            plannedworkout = (tempoMF_recovery[session])
 
-    elif daytype == "endurance":
-        plannedworkout = (endurance_recovery[session])
-    print(plannedworkout)
+        elif daytype == "tempoW":
+            plannedworkout = (tempoW_recovery[session])
+
+        elif daytype == "endurance":
+            plannedworkout = (endurance_recovery[session])
+            print(plannedworkout)
 elif answer1 == "info": 
     info1 = input("raining,core,mobility,foot,hipshurdles, subtractshift, resetshift")
     if info1 == "raining":
