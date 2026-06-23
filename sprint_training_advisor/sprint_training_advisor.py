@@ -505,7 +505,7 @@ Stay seated.
 This is the best general replacement for tempo/conditioning without stressing sore tissue."""
 
 
-#Ok now for the actual coding
+
 def get_schedule_shift():
     if not SHIFT_FILE.exists():
         return 0
@@ -550,7 +550,7 @@ def subtract_schedule_shift_one():
 
     print("Schedule shift decreased by 1 day.")
     print(f"Total schedule shift is now: {new_shift} day(s).")
-########################################### -> Infromation above works schedule shift
+
 def make_sure_log_exists():
     if not LOG_FILE.exists():
         with open(LOG_FILE, "w", newline="", encoding="utf-8") as file:
@@ -742,17 +742,17 @@ def edit_training_log_menu():
 
         else:
             print("Invalid choice. Type view, delete, edit, add, or done.")
-########################################### -> Infromation above works the menu.
+
 def get_training_day_info():
-    date = input("date in mmdd format (no slashes)") # asks for the date
-    trainingdate = datetime.strptime("2026" + date,"%Y%m%d") #turns it into a date
-    seasonstart= datetime.strptime("20260601", "%Y%m%d") #turns date into a number
-    dayssincestart = (trainingdate - seasonstart).days # if we want to change like we miss a day add 1 day to trianingdate or take one away from season start
+    date = input("date in mmdd format (no slashes)") 
+    trainingdate = datetime.strptime("2026" + date,"%Y%m%d") 
+    seasonstart= datetime.strptime("20260601", "%Y%m%d") 
+    dayssincestart = (trainingdate - seasonstart).days 
     schedule_shift = get_schedule_shift()
     adjusted_dayssincestart = dayssincestart - schedule_shift
-    weeknumber = (adjusted_dayssincestart // 7) + 1 # gets the week
+    weeknumber = (adjusted_dayssincestart // 7) + 1 
     workoutlevel = get_workout_level(weeknumber)
-    daynumber = (adjusted_dayssincestart % 7) + 1 #gets the day
+    daynumber = (adjusted_dayssincestart % 7) + 1 
     typebynumber = {
         1: "tempoMF",
         2: "accel",
@@ -761,7 +761,7 @@ def get_training_day_info():
         5: "tempoMF",
         6: "topspeed",
         7: "rest"
-    } # just sets each type of workout into a number to be later used to acess the workout level
+    } 
     daytype = typebynumber[daynumber]
     return trainingdate, weeknumber, workoutlevel, daytype
 def get_workout_level(weeknumber):
@@ -777,30 +777,28 @@ def get_workout_level(weeknumber):
                 workoutlevel = "unknown"
                 print("not a valid training week.")
         return workoutlevel
-####################t###################### -> Inffromation above works the training date
-LOG_FILE = Path(__file__).parent / "training_log.csv" #Path describes the location/name of a file on my computer. By using exists() we can check to see if this file already exists. this also shows its within the same folder
+
+LOG_FILE = Path(__file__).parent / "training_log.csv" 
 SHIFT_FILE = Path(__file__).parent / "schedule_shift.txt"
-def add_to_training_log(trainingdate, workout_text):  # This creates the function
-    notes = input("Any additional notes? Press enter if none: ") # setting a variable notes to be used to hold the response
+def add_to_training_log(trainingdate, workout_text):  
+    notes = input("Any additional notes? Press enter if none: ") 
+    file_exists = LOG_FILE.exists() 
+    
+    with open(LOG_FILE, "a", newline="", encoding="utf-8") as file: 
+        writer = csv.writer(file)                                  
 
-    file_exists = LOG_FILE.exists() # checks to see if the file already exists as said before, through the path that checks the folder
-
-    with open(LOG_FILE, "a", newline="", encoding="utf-8") as file: #the "a" stands for append, for this csv addition, here append means to add to what has already been created. UTF 8 is the rule system for how to store the characters
-        writer = csv.writer(file)                                   # the open means that it will open the log file as where it is stored and then now append it. newline creates the proper spacing. named file.
-# having the csv.writer access the file that we just previously named which is shown in the line above. Using "with" allows for the file to be closed one we are done.
-        if not file_exists: # for the first put of information it makes it so that we have the headers
+        if not file_exists: 
             writer.writerow(["date", "workout", "notes"])
 
-        writer.writerow([ # this actually writes the workout, this includes the date, the workout, and the notes
+        writer.writerow([ 
             trainingdate.strftime("%Y-%m-%d"),
             workout_text,
             notes
         ])
-# we only want to call this fucntion after we are given the workut for the day
+
 
     print("Workout added to training_log.csv")
-answer1 = input("workout, recovery, info, edit, shift?") #asks the first question
-#below works to get the proper exercises
+answer1 = input("workout, recovery, info, edit, shift?")
 
 if answer1 == "workout":
     trainingdate, weeknumber, workoutlevel, daytype = get_training_day_info()
@@ -811,7 +809,7 @@ if answer1 == "workout":
         session = daytype + workoutlevel
         liftsession = daytype + "lift" + workoutlevel
         if daytype == "accel":
-            plannedworkout = ("Running:\n" + accel[session] + "\n\n" + "Lifting:\n" + accellift[liftsession]) # uses the created variable session to go within the accel dictionary and bring out the proper information, same with the liftsession
+            plannedworkout = ("Running:\n" + accel[session] + "\n\n" + "Lifting:\n" + accellift[liftsession]) 
 
         elif daytype == "topspeed":
             plannedworkout = ("Running:\n"+ topspeed[session] + "\n\n" + "Lifting:\n" + topspeedlift[liftsession])
@@ -828,7 +826,7 @@ if answer1 == "workout":
             "No endurance workout has been entered")
 
             plannedworkout = ("Running:\n" + endurance_running + "\n\nLifting:\n" + endurancelift[liftsession])
-        soreness = input("soreness? hips/calves/hamstrings/core/quads/none") # asks the question about the soreness
+        soreness = input("soreness? hips/calves/hamstrings/core/quads/none") 
         if soreness == "none":
             print("Planned workout:")
             print(plannedworkout)
@@ -843,36 +841,36 @@ if answer1 == "workout":
                 print("Invalid level. Type bad, ok, or almost.")
             elif level == "rest":
                 print("rest day")
-                adder = input("Do you want to add this workout to the log? yes/no: ") # this asks the question for when soreness is not equal to none, after we have already determined the workout
+                adder = input("Do you want to add this workout to the log? yes/no: ") 
                 if adder == "yes":
                     add_to_training_log(trainingdate, "rest day")
             elif daytype == "endurance" and level == "almost":
                 modifiedworkout = almostendurance
                 print("Modified workout:")
                 print(almostendurance)
-                adder = input("Do you want to add this workout to the log? yes/no: ") # this asks the question for when soreness is not equal to none, after we have already determined the workout
+                adder = input("Do you want to add this workout to the log? yes/no: ") 
                 if adder == "yes":
                     add_to_training_log(trainingdate, modifiedworkout)
             elif daytype in ["tempoMF", "tempoW"] and level in ["almost","ok"]:
                 modifiedworkout = "6xwalk,skip,jogs"
                 print(modifiedworkout)
-                adder = input("Do you want to add this workout to the log? yes/no: ") # this asks the question for when soreness is not equal to none, after we have already determined the workout
+                adder = input("Do you want to add this workout to the log? yes/no: ") 
                 if adder == "yes":
                     add_to_training_log(trainingdate, modifiedworkout)
             elif daytype in ["tempoMF","tempoW"] and level == "bad":
                 modifiedworkout = "15 min bike and mobility/any strengthening"
                 print(modifiedworkout)
-                adder = input("Do you want to add this workout to the log? yes/no: ") # this asks the question for when soreness is not equal to none, after we have already determined the workout
+                adder = input("Do you want to add this workout to the log? yes/no: ") 
                 if adder == "yes":
                     add_to_training_log(trainingdate, modifiedworkout)
             else:
                 modifiedworkout = alternatives[soreness][level]
                 print("Modified workout:")
                 print(modifiedworkout)
-                adder = input("Do you want to add this workout to the log? yes/no: ") # this asks the question for when soreness is not equal to none, after we have already determined the workout
+                adder = input("Do you want to add this workout to the log? yes/no: ") 
                 if adder == "yes":
                     add_to_training_log(trainingdate, modifiedworkout)
-elif answer1 == "recovery": # gives the reccovery based on the daytype
+elif answer1 == "recovery":
     trainingdate, weeknumber, workoutlevel, daytype = get_training_day_info()
     session = daytype + workoutlevel
     if daytype == "accel":
@@ -890,7 +888,7 @@ elif answer1 == "recovery": # gives the reccovery based on the daytype
     elif daytype == "endurance":
         plannedworkout = (endurance_recovery[session])
     print(plannedworkout)
-elif answer1 == "info": # gives the general information about info
+elif answer1 == "info": 
     info1 = input("raining,core,mobility,foot,hipshurdles, subtractshift, resetshift")
     if info1 == "raining":
         trainingdate, weeknumber, workoutlevel, daytype = get_training_day_info()
@@ -924,7 +922,7 @@ elif answer1 == "info": # gives the general information about info
     else:
         print("invalid")
 elif answer1 == "edit":
-    edit_training_log_menu() # calls the training log menu
+    edit_training_log_menu()
 elif answer1 == "shift":
     shift_schedule_back_one()
 else:
