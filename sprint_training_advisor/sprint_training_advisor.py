@@ -1,41 +1,6 @@
 from datetime import datetime # this imports the date and time infromation
 import csv  # This and below allows for a csv file to be created
 from pathlib import Path
-#"""How is this going to function - >
-#Ask for the date and time and it returns us the respective workout for that day. For this to work
-#there is going to need do be one section for the type of day, tempo, accel, top speed, endurance,
-#then it also needs to then ask about the specific day because for each accel, top speed, endurance sessio
-#as the days goes on the workouts are different. Then after it gives the workout I want it to ask how I am feeling,
-#I can either respond with hips, calves, hamstrings, core or none. IF none it says ok, if any muscle group, it Then
-#asks bad, ok, almost, and then based on that and the muscle group it tells me the workout.
-#1. Ask for date/time
-#2. Ask what type of day it is:
-#   - tempo
- #  - accel
-  # - top speed
-   #- endurance
-
-#3. Ask which session number/day in the progression it is
- #  Example: accel day 1, accel day 2, accel day 3
-#
-#4. Print the planned workout
-#
-#5. Ask how you are feeling:
-#   - hips
-#   - calves
-#   - hamstrings
-#   - core
-#   - none
-#6. If none:
-#   print "Ok, do the planned workout."
-#
-#7. If muscle group:
-#   ask soreness level:
-#   - bad
-##   - ok
-#   - almost
-
-
 topspeed = {
     "topspeed1" : "Wickets × 4, 4 × Fly 30m, 2 × Fly 40m, 1 × 150m ",
     "topspeed2" : "Wickets × 4, 4 × Fly 30m, 2 × Fly 40m, 1 × 150m",
