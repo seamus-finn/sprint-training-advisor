@@ -872,7 +872,8 @@ if answer1 == "workout":
                     add_to_training_log(trainingdate, modifiedworkout)
 elif answer1 == "recovery":
     trainingdate, weeknumber, workoutlevel, daytype = get_training_day_info()
-
+    if workoutlevel == "unknown":
+        print("That date is outside the current 14-week training plan.")
     if workoutlevel == "rest" or daytype == "rest":
         print("Rest day.")
     else:
@@ -891,7 +892,7 @@ elif answer1 == "recovery":
 
         elif daytype == "endurance":
             plannedworkout = (endurance_recovery[session])
-            print(plannedworkout)
+        print(plannedworkout)
 elif answer1 == "info": 
     info1 = input("raining,core,mobility,foot,hipshurdles, subtractshift, resetshift")
     if info1 == "raining":
