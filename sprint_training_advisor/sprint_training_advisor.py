@@ -1,4 +1,4 @@
-from datetime import datetime # this imports the date and time infromation
+from datetime import datetime # this imports the date and time information
 import csv  # This and below allows for a csv file to be created
 from pathlib import Path
 topspeed = {
